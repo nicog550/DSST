@@ -67,11 +67,15 @@ html {
 }
 
 .gris {
-    color: #282828;
+    color: #282828 !important;
 }
 
 .pointer {
     cursor: pointer !important;
+}
+
+.defCurs {
+    cursor: default !important;
 }
 
 div.main {
@@ -151,4 +155,11 @@ a#logoutBtn {
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-bottom: 6px solid #000;
+}
+
+span.separator {
+    color: #282828;
+    font-weight: 800;
+    margin-left: 10px;
+    margin-right: 10px;
 }
