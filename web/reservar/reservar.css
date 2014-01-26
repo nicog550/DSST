@@ -1,0 +1,28 @@
+
+body {
+    min-height: 665px;
+}
+
+.rightColumn {
+    position: fixed;
+    right: 280px;
+    width: 175px;
+}
+
+#dates {
+    top: 83px;
+}
+
+#submitSet {
+    top: 223px;
+}
+
+button.submitBtn {
+    width: 170px;
+}
+
+.errorText {
+    display: block;
+    color: red !important;
+    font-size: 12px;
+}

@@ -1,0 +1,154 @@
+
+h1, h2, h3, h4, h5, h6, label, span, p, legend {
+    font-family: 'Ubuntu';
+    color: #b2b003;
+}
+
+legend {
+    font-size: 2em;
+    font-variant: small-caps;
+}
+
+select {
+    min-width: 50px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #b2b003;
+}
+
+input, select {
+    background-color: #c2c013;
+    border: 0;
+    height: 20px;
+    border-radius: 4px;
+}
+
+input, select, button, a {
+    font-family: 'Ubuntu';
+}
+
+a {
+    text-decoration: none;
+}
+
+a[type=button] {
+    background-color: #c2c013;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a[type=button]:hover {
+    background-color: #465768;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    text-align: center;
+    background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	right top,
+	color-stop(0, #000),
+	color-stop(0.7, #163922)
+    );
+    background-image: -o-linear-gradient(right top, #000 0%, #163922 100%);
+    background-image: -moz-linear-gradient(right top, #000 0%, #163922 100%);
+    background-image: -webkit-linear-gradient(right top, #000 0%, #163922 100%);
+    background-image: -ms-linear-gradient(right top, #000 0%, #163922 100%);
+    background-image: linear-gradient(to right top, #000 0%, #163922 100%);
+}
+
+html {
+    min-height: 100%;
+}
+
+.gris {
+    color: #282828;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+div.main {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    width: 800px;
+}
+
+div.header {
+    display: inline-block;
+    background-color: #b2b003;
+    width: 100%;
+}
+
+.right {
+    float: right !important;
+}
+
+.left {
+    float: left !important;
+}
+
+.nds {
+    display: none !important;
+}
+
+.center {
+    text-align: center;
+}
+
+.noTop {
+    margin-top: 0px !important;
+}
+
+.inlineBlock {
+    display: inline-block !important;
+}
+
+div.cercador div, form fieldset div {
+    padding-bottom: 16px;
+}
+
+button.submitBtn {
+    border-radius: 10px;
+    margin-top: 10px;
+    height: 70px;
+    font-weight: 600;
+    font-size: larger;
+}
+
+.error {
+    color: red !important;
+}
+
+a#logoutBtn {
+    position: absolute;
+    display: block;
+}
+
+.arrow {
+    display: inline-block;
+    position: relative;
+    left: 4px;
+    top: -2px;
+    width: 0; 
+    height: 0; 
+}
+
+.arrowDown {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000;
+}
+
+.arrowUp {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #000;
+}
