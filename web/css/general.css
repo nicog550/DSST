@@ -131,6 +131,12 @@ button.submitBtn {
     color: red !important;
 }
 
+.errorText {
+    display: block;
+    color: red !important;
+    font-size: 12px;
+}
+
 a#logoutBtn {
     position: absolute;
     display: block;

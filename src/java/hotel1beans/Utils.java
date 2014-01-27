@@ -5,33 +5,33 @@
  */
 package hotel1beans;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author mascport
- */
-public class Utils implements Serializable {
-
-    public void entradaUsuarioClave(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            HttpSession session) {
-        String us = (String) request.getParameter("usuario");
-        String cl = (String) request.getParameter("clave");
-        /*int nivell = (new AccessDB()).compruebaClave(us, cl);
-        if (nivell > 0) {
-            session.setAttribute("usuario", us);
-            session.setAttribute("clave", cl);
-            session.setAttribute("nivel", new Integer(nivell));
-        }
-        try {
+public class Utils/* implements Serializable*/ {
+    
+    /**
+     * Guarda a l'objecte <code>session</code> les dades de l'usuari
+     * @param request
+     * @param nom Nom de l'usuari
+     * @param email Email de l'usuari
+     * @param dni DNI de l'usuari
+     * @param nac Nacionalitat de l'usuari
+     * @param id ID de l'usuari
+     * @param tipus Tipus d'usuari de l'usuari
+     */
+    public static void setSessio(HttpServletRequest request, String nom, String email, String dni, String nac, String id,
+                                String tipus) {
+        
+        HttpSession sessio = request.getSession();
+        sessio.setAttribute("nom", nom);
+        sessio.setAttribute("nacionalitat", nac);
+        sessio.setAttribute("dni", dni);
+        sessio.setAttribute("tipus", tipus);
+        sessio.setAttribute("id", id);
+        sessio.setAttribute("email", email);
+        /*try {
             response.sendRedirect("index.jsp");
         } catch (IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);

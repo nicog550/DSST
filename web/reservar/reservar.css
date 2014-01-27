@@ -20,9 +20,3 @@ body {
 button.submitBtn {
     width: 170px;
 }
-
-.errorText {
-    display: block;
-    color: red !important;
-    font-size: 12px;
-}

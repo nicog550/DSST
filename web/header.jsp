@@ -9,10 +9,10 @@
                 <img src="../img/logo.png" class="left" alt="Logo de l'hotel"/>
             </a>
             <div class="right">
-                <h4 class="gris pointer"><%
+                <h4 id="login-signup" class="gris pointer" style="min-width: 100px;"><%
                     String nom = (String)session.getAttribute("nom");
                     if (nom != null) { %>
-                        <a href="#" id="nomVal" class="gris"><%=nom%><div class="arrow arrowDown"></div></a><br />
+                        <a href="#" id="nomVal" class="gris right"><%=nom%><div class="arrow arrowDown"></div></a><br />
                         <a href="../logout" id="logoutBtn" class="gris" style="display: none;">Tancar sessió</a><%
                     } else { %>
                         <a data-reveal-id="loginModal" id="loginBtn">Iniciar sessió</a>
@@ -45,8 +45,8 @@
     </div>
     <!-- Popup de registre -->
     <div id="signupModal" class="reveal-modal medium center">
-        <h2>Iniciar sessió</h2>
-        <form id="signupForm" action="/register" method="post" class="inlineBlock" style="text-align: right; width: 340px;">
+        <h2>Registrar-se</h2>
+        <form id="signupForm" action="/registre" method="post" class="inlineBlock" style="text-align: right; width: 340px;">
             <fieldset>
                 <div>
                     <label for="signupNom">Nom</label>
@@ -55,6 +55,10 @@
                 <div>
                     <label for="signupMail">Email</label>
                     <input type="email" id="signupMail" />
+                </div>
+                <div>
+                    <label for="signupPassDni">DNI</label>
+                    <input type="text" maxlength="9" id="signupDni" />
                 </div>
                 <div>
                     <label for="signupPass">Contrasenya</label>

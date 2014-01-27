@@ -60,7 +60,7 @@
         <!-- Modal que mostra el missatge de disponibilitat trobada -->
         <div id="siDispModal" class="reveal-modal large">
             <h2>S'ha trobat disponibilitat!</h2>
-            <p class="lead">En <span id="timeout">5</span> <span id="segons">segons</span> us durem a la pàgina de reserves</p>
+            <p class="lead">En <span id="timeout">2</span> <span id="segons">segons</span> us durem a la pàgina de reserves</p>
             <a class="close-reveal-modal">&#215;</a>
 	</div>
 

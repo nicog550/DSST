@@ -19,15 +19,14 @@
         String inici, fi, email, nac, dni, tip;
         inici = fi = email = nac = dni = tip = "";
         int places = 0;
-        HashMap paisos, tipus;
-        paisos = tipus = new HashMap();
+        HashMap tipus;
+        tipus = new HashMap();
         if (!"POST".equalsIgnoreCase(request.getMethod())) {
             response.sendRedirect("../home/home.jsp");
         } else {
             inici = request.getParameter("inici");
             fi = request.getParameter("fi");
             places = Integer.parseInt(request.getParameter("num"));
-            paisos = db.getPaisos();
             tipus = db.getTipusUsuaris();
             email = (String)session.getAttribute("email");
             nac = (String)session.getAttribute("nacionalitat");
@@ -52,7 +51,7 @@
                     <fieldset class="left">
                         <legend>Informació dels usuaris</legend>
                         <div><%
-                            Iterator<String> iteradorPais, iteradorTipus;
+                            Iterator<String> iteradorTipus;
                             for (int i = 0; i < places; i++) { %>
                                 <div id="hoste-<%=i%>" class="host">
                                     <span>HOSTE <%=i + 1%>:</span>

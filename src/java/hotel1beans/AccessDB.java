@@ -27,7 +27,11 @@ public class AccessDB {
     private final String db;
     private final String user;
     private final String pass;
-
+    
+    /** <code>String</code> Tipus d'usuari adult */
+    public static String TIPUS_ADULT = "3";
+    
+    // <editor-fold defaultstate="collapsed" desc="Constructor.">
     public AccessDB() {
         host = DBProperties.host;
         port = DBProperties.port;
@@ -35,8 +39,15 @@ public class AccessDB {
         user = DBProperties.user;
         pass = DBProperties.pass;
     }
-
-// <editor-fold defaultstate="collapsed" desc="Mètode de la classe per connectar-se a la bbdd.">
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Main per fer proves.">
+    public static void main(String[] args) {
+        AccessDB adb = new AccessDB();
+    }
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode de la classe per connectar-se a la bbdd.">
     private void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -47,7 +58,8 @@ public class AccessDB {
         }
     }
     // </editor-fold>
-    
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que comprova si hi ha disponibilitat.">
     /**
      * Comprova si hi ha disponibilitat d'habitacions per unes dates concretes
      * @param dataIni Data d'entrada a l'hotel
@@ -86,7 +98,9 @@ public class AccessDB {
         }
         return acum >= Integer.parseInt(places);
     }
-    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que efectua un login.">
     /**
      * Efectua el login.
      * @param email L'email de l'usuari
@@ -122,7 +136,46 @@ public class AccessDB {
         if (!nom.equals("")) res = nom + "_" + nac + "_" + dni + "_" + tip + "_" + id;
         return res;
     }
+// </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode que efectua el registre d'un usuari.">
+    /**
+     * Guarda un usuari
+     * @param nom Noms de l'usuari
+     * @param email Adreces d'email de l'usuari
+     * @param nac Nacionalitat de l'usuari
+     * @param dni DNIs de l'usuari
+     * @param tipus Tipus d'usuari de l'usuari
+     * @param pass Contrasenya de l'usuari
+     * @return ID de l'usuari
+     */
+    public String registrar(String nom, String email, String nac, String dni, String pass, String tipus) {
+        ResultSet res;
+        String id = ""; //Contindrà l'id de l'usuari
+        String insert = ""
+            + "INSERT INTO usuari (nom_usu, email_usu, nacionalitat_usu, dni_usu, id_tipus_usuari, contrasenya_usu)"
+            + "  VALUES ('" + nom + "', '" + email + "', '" + nac + "', '" + dni + "', " + tipus + ", '" + pass + "');";
+        try {
+            connect();
+            Statement stat = con.createStatement();
+            stat.executeUpdate(insert);
+            //Cercam l'id de l'usuari
+            res = stat.executeQuery("SELECT id_usuari FROM usuari WHERE dni_usu = '" + dni + "';");
+            while(res.next()) {
+                id = res.getString("id_usuari");
+                break; //Ens asseguram de prendre només una fila
+            }
+            stat.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return id;
+    }
+    // </editor-fold> 
 
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna totes les nacionalitats.">
     public HashMap getPaisos() {
         HashMap res = new HashMap<>();
         try {
@@ -142,7 +195,9 @@ public class AccessDB {
         }
         return res;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els tipus d'usuaris.">
     public HashMap getTipusUsuaris() {
         HashMap res = new HashMap<>();
         try {
@@ -162,15 +217,11 @@ public class AccessDB {
         }
         return res;
     }
-
-// <editor-fold defaultstate="collapsed" desc="Main per fer proves.">
-    public static void main(String[] args) {
-        AccessDB adb = new AccessDB();
-    }
-    // </editor-fold>    
-
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode que crea una reserva.">
     /**
-     * Mètode que guarda els usuaris i crea una reserva per ells
+     * Guarda els usuaris i crea una reserva per ells
      * @param noms Els noms de tots els usuaris
      * @param emails Els emails de tots els usuaris
      * @param dnis Els DNIs de tots els usuaris
@@ -200,7 +251,9 @@ public class AccessDB {
         }
         return ret;
     }
+    // </editor-fold>  
     
+    // <editor-fold defaultstate="collapsed" desc="Guarda els usuaris a la BBDD.">
     /**
      * Guarda els usuaris donats si no existeixen ja
      * @param places Quantitat d'usuaris
@@ -238,7 +291,9 @@ public class AccessDB {
         }
         return ids;
     }
-
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Creació efectiva de les reserves.">
     /**
      * Creació efectiva de les reserves
      * @param places Número de places a reservar
@@ -298,8 +353,9 @@ public class AccessDB {
         }
         
     }
+    // </editor-fold>  
     
-// <editor-fold defaultstate="collapsed" desc="Mètodes per desconnectarse de la bbdd i per convertir a UTF-8.">
+    // <editor-fold defaultstate="collapsed" desc="Mètodes per desconnectarse de la bbdd i per convertir a UTF-8.">
     private void disconnect() {
         try {
             con.close();
