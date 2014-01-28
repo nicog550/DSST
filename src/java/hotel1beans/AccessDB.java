@@ -31,6 +31,8 @@ public class AccessDB {
     
     /** <code>String</code> Tipus d'usuari adult */
     public static String TIPUS_ADULT = "3";
+    /** <code>String</code> Tipus d'usuari administrador */
+    public static String TIPUS_ADMIN = "4";
     
     // <editor-fold defaultstate="collapsed" desc="Constructor.">
     public AccessDB() {
