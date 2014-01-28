@@ -3,7 +3,7 @@
 <body>
     <jsp:useBean id="bbdd" class="hotel1beans.AccessDB" scope="request" /><%
             HashMap paisos = bbdd.getPaisos(); %>
-    <div class="header">
+    <header>
         <div class="main">
             <a href="../home/home.jsp">
                 <img src="../img/logo.png" class="left" alt="Logo de l'hotel"/>
@@ -22,7 +22,7 @@
                 </h4>
             </div>
         </div>
-    </div>
+    </header>
     <!-- Popup de login -->
     <div id="loginModal" class="reveal-modal medium center">
         <h2>Iniciar sessió</h2>

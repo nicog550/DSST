@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class AccessDB {
     
     private Connection con;
+    private Statement stat;
     private final String host;
     private final String port;
     private final String db;
@@ -42,9 +43,9 @@ public class AccessDB {
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Main per fer proves.">
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         AccessDB adb = new AccessDB();
-    }
+    }*/
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Mètode de la classe per connectar-se a la bbdd.">
@@ -53,6 +54,7 @@ public class AccessDB {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(
                     "jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
+            stat = con.createStatement();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -71,7 +73,6 @@ public class AccessDB {
         int acum = 0, num = Integer.parseInt(places);
         try {
             connect();
-            Statement stat = con.createStatement();
             String sql = ""
                     +   "SELECT h.places_hab" +
                         "	FROM habitacio AS h" +
@@ -112,7 +113,6 @@ public class AccessDB {
         nom = nac = dni = tip = id = "";
         try {
             connect();
-            Statement stat = con.createStatement();
             String sql = "SELECT id_usuari, nom_usu, nacionalitat_usu, dni_usu, id_tipus_usuari"
                     + "     FROM usuari"
                     + "     WHERE email_usu = '" + email + "'"
@@ -157,8 +157,6 @@ public class AccessDB {
             + "  VALUES ('" + nom + "', '" + email + "', '" + nac + "', '" + dni + "', " + tipus + ", '" + pass + "');";
         try {
             connect();
-            Statement stat = con.createStatement();
-            stat.executeUpdate(insert);
             //Cercam l'id de l'usuari
             res = stat.executeQuery("SELECT id_usuari FROM usuari WHERE dni_usu = '" + dni + "';");
             while(res.next()) {
@@ -180,7 +178,6 @@ public class AccessDB {
         HashMap res = new HashMap<>();
         try {
             connect();
-            Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM pais;");
             while (rs.next()) {
                 String codi = toUtf8(rs.getString("codi_pais"));
@@ -202,7 +199,6 @@ public class AccessDB {
         HashMap res = new HashMap<>();
         try {
             connect();
-            Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari;");
             while (rs.next()) {
                 String id = toUtf8(rs.getString("id_tipus_usuari"));
@@ -236,11 +232,10 @@ public class AccessDB {
         boolean ret = false;
         try {
             connect();
-            Statement stat = con.createStatement();
             int places = noms.length;
             
-            int[] ids = guardarUsuaris(places, noms, emails, nacionalitats, dnis, tipus, stat); //Guardam els usuaris
-            crearReserves(places, ids, dataIni, dataFi, stat); //Cream les reserves
+            int[] ids = guardarUsuaris(places, noms, emails, nacionalitats, dnis, tipus); //Guardam els usuaris
+            crearReserves(places, ids, dataIni, dataFi); //Cream les reserves
             
             ret = true;
             stat.close();
@@ -253,7 +248,7 @@ public class AccessDB {
     }
     // </editor-fold>  
     
-    // <editor-fold defaultstate="collapsed" desc="Guarda els usuaris a la BBDD.">
+    // <editor-fold defaultstate="collapsed" desc="Privat: Guarda els usuaris a la BBDD.">
     /**
      * Guarda els usuaris donats si no existeixen ja
      * @param places Quantitat d'usuaris
@@ -262,12 +257,11 @@ public class AccessDB {
      * @param nacionalitats Nacionalitats de tots els usuaris
      * @param dnis DNIs de tots els usuaris
      * @param tipus Tipus d'usuari de tots els usuaris
-     * @param stat
      * @return IDs de tots els usuaris inclosos en la consulta
      * @throws SQLException 
      */
     private int[] guardarUsuaris(int places, String[] noms, String[] emails, String[] nacionalitats, String[] dnis,
-                                 int[] tipus, Statement stat) throws SQLException {
+                                 int[] tipus) throws SQLException {
         String insert;
         ResultSet res;
         int[] ids = new int[places]; //Contindrà l'id de cada usuari
@@ -293,17 +287,16 @@ public class AccessDB {
     }
     // </editor-fold>  
     
-    // <editor-fold defaultstate="collapsed" desc="Creació efectiva de les reserves.">
+    // <editor-fold defaultstate="collapsed" desc="Privat: Creació efectiva de les reserves.">
     /**
      * Creació efectiva de les reserves
      * @param places Número de places a reservar
      * @param ids IDs dels usuaris que reserven
      * @param dataIni Data d'inici de les reserves
      * @param dataFi Data de fi de les reserves
-     * @param stat
      * @throws Exception Llança excepció quan falla una inserció o quan no hi ha disponibilitat
      */
-    private void crearReserves(int places, int[] ids, String dataIni, String dataFi, Statement stat) throws Exception {
+    private void crearReserves(int places, int[] ids, String dataIni, String dataFi) throws Exception {
         //'Habitacions' indicarà quantes habitacions i de quantes places s'han de reservar
         ArrayList<Integer> habitacions = new ArrayList<>();
         switch (places) {

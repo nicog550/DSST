@@ -91,6 +91,12 @@ div.header {
     width: 100%;
 }
 
+header, footer {
+    display: inline-block;
+    background-color: #b2b003;
+    width: 100%;
+}
+
 .right {
     float: right !important;
 }

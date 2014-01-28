@@ -20,3 +20,9 @@ body {
 button.submitBtn {
     width: 170px;
 }
+
+footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+}

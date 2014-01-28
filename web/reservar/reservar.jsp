@@ -157,6 +157,6 @@
                 out.print("El nivel de permiso es: " + nivell);
             }*/
         %>
-
+        <%//@include file="../footer.jsp" %>
     </body>
 </html>
