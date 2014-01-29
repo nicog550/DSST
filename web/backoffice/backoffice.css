@@ -1,0 +1,26 @@
+
+button.editBtn {
+    height: 20px;
+    width: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(../css/images/edit.png);
+    border: 0;
+}
+
+button.deleteBtn {
+    height: 20px;
+    width: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(../css/images/delete.png);
+    border: 0;
+}
+
+.editBtn:hover, .deleteBtn:hover {
+    background-color: #495B44;
+}
+
+td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+

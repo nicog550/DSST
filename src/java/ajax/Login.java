@@ -152,14 +152,6 @@ public class Login extends HttpServlet {
                     + "<dni>" + strArr[2] + "</dni>"
                     + "<tip>" + strArr[3] + "</tip>";
                 Utils.setSessio(request, strArr[0], email, strArr[2], strArr[1], strArr[4], strArr[3]);
-
-                HttpSession session = request.getSession();
-                session.setAttribute("nom", strArr[0]);
-                session.setAttribute("nacionalitat", strArr[1]);
-                session.setAttribute("dni", strArr[2]);
-                session.setAttribute("tipus", strArr[3]);
-                session.setAttribute("id", strArr[4]);
-                session.setAttribute("email", email);
             }
         }
         response.setContentType("text/xml");

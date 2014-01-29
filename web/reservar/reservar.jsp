@@ -14,8 +14,8 @@
     </head>
     <body>
         <jsp:useBean id="db" class="hotel1beans.AccessDB" scope="request" />
-        <%@include file="../header.jsp" %>
-        <% //Si no arribam aquí per petició POST redirigim a la home
+        <%@include file="../header.jsp" %><%
+        //Si no arribam aquí per petició POST redirigim a la home
         String inici, fi, email, nac, dni, tip;
         inici = fi = email = nac = dni = tip = "";
         int places = 0;

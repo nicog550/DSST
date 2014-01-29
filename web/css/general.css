@@ -113,6 +113,14 @@ header, footer {
     text-align: center;
 }
 
+.textLeft {
+    text-align: left !important;
+}
+
+.textRight {
+    text-align: right !important;
+}
+
 .noTop {
     margin-top: 0px !important;
 }

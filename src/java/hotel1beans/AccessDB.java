@@ -159,6 +159,7 @@ public class AccessDB {
             + "  VALUES ('" + nom + "', '" + email + "', '" + nac + "', '" + dni + "', " + tipus + ", '" + pass + "');";
         try {
             connect();
+            stat.executeUpdate(insert);
             //Cercam l'id de l'usuari
             res = stat.executeQuery("SELECT id_usuari FROM usuari WHERE dni_usu = '" + dni + "';");
             while(res.next()) {

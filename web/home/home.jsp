@@ -24,10 +24,12 @@
             <div>
                 <div class="cercador left">
                     <div>
-                        <label>Triau una data d'entrada</label><input type="text" id="dataIni" class="date right" /><br />
+                        <label for="dataIni">Triau una data d'entrada</label>
+                        <input type="text" id="dataIni" class="date right" /><br />
                     </div>
                     <div>
-                        <label>Triau una data de sortida</label><input type="text" id="dataFi" class="date right" /><br />
+                        <label for="dataFi">Triau una data de sortida</label>
+                        <input type="text" id="dataFi" class="date right" /><br />
                     </div>
                     <div>
                         <label>Triau el número de places</label>

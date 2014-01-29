@@ -1,0 +1,146 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hotel1beans;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Classe per efectuar les interaccions amb la bbdd
+ */
+public class BackofficeDB {
+    
+    private Connection con;
+    private Statement stat;
+    private final String host;
+    private final String port;
+    private final String db;
+    private final String user;
+    private final String pass;
+    
+    // <editor-fold defaultstate="collapsed" desc="Constructor.">
+    public BackofficeDB() {
+        host = DBProperties.host;
+        port = DBProperties.port;
+        db = DBProperties.db;
+        user = DBProperties.user;
+        pass = DBProperties.pass;
+    }
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Main per fer proves.">
+    public static void main(String[] args) {
+        BackofficeDB bdb = new BackofficeDB();
+    }
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode de la classe per connectar-se a la bbdd.">
+    private void connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
+            stat = con.createStatement();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els usuaris.">
+    public HashMap getUsuaris() {
+        HashMap res = new HashMap<>();
+        try {
+            connect();
+            String select = ""
+                    + "SELECT id_usuari, nom_usu, email_usu, nom_pais, dni_usu, nom_tip"
+                    + " FROM usuari AS u"
+                    + " INNER JOIN pais as p"
+                    + "     ON u.nacionalitat_usu = p.codi_pais"
+                    + " INNER JOIN tipus_usuari AS t"
+                    + "     ON u.id_tipus_usuari = t.id_tipus_usuari"
+                    + " ORDER BY id_usuari";
+            ResultSet rs = stat.executeQuery(select);
+            String[] usu = new String[5]; //String que contindrà les dades de l'usuari
+            while (rs.next()) {
+                String id = toUtf8(rs.getString("id_usuari"));
+                usu[0] = toUtf8(rs.getString("nom_usu"));
+                usu[1] = toUtf8(rs.getString("email_usu"));
+                usu[2] = toUtf8(rs.getString("nom_pais"));
+                usu[3] = toUtf8(rs.getString("dni_usu"));
+                usu[4] = toUtf8(rs.getString("nom_tip"));
+                res.put(id, (String[])usu.clone());
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que elimina una fila.">
+    /**
+     * Efectua una baixa
+     * @param taula La taula d'on eliminar
+     * @param id L'id de l'element a eliminar
+     * @return El número de files afectades
+     */
+    public int baixa(String taula, String id) {
+        int res = 0;
+        String pk;
+        switch (taula) {
+            case "usuari": pk = "id_usuari"; break;
+            case "tipus_usuari": pk = "id_tipus_usuari"; break;
+            case "descompte": pk = "id_descompte"; break;
+            default: pk = ""; break;
+        }
+        try {
+            connect();
+            String delete = "DELETE FROM " + taula + " WHERE " + pk + " = " + id + ";";
+            res = stat.executeUpdate(delete);
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètodes per desconnectarse de la bbdd i per convertir a UTF-8.">
+    private void disconnect() {
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String toUtf8(String s) {
+        String res = "no-UTF8";
+        byte[] b;
+        try {
+            b = s.getBytes("UTF-8");
+            res = new String(b);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(BackofficeDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+    // </editor-fold>  
+}
