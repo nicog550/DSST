@@ -64,7 +64,7 @@ public class BackofficeDB {
         try {
             connect();
             String select = ""
-                    + "SELECT id_usuari, nom_usu, email_usu, nom_pais, dni_usu, nom_tip"
+                    + "SELECT id_usuari, nom_usu, email_usu, nom_pais, codi_pais, dni_usu, nom_tip, u.id_tipus_usuari AS id_tip"
                     + " FROM usuari AS u"
                     + " INNER JOIN pais as p"
                     + "     ON u.nacionalitat_usu = p.codi_pais"
@@ -72,7 +72,7 @@ public class BackofficeDB {
                     + "     ON u.id_tipus_usuari = t.id_tipus_usuari"
                     + " ORDER BY id_usuari";
             ResultSet rs = stat.executeQuery(select);
-            String[] usu = new String[5]; //String que contindrà les dades de l'usuari
+            String[] usu = new String[7]; //String que contindrà les dades de l'usuari
             while (rs.next()) {
                 String id = toUtf8(rs.getString("id_usuari"));
                 usu[0] = toUtf8(rs.getString("nom_usu"));
@@ -80,6 +80,8 @@ public class BackofficeDB {
                 usu[2] = toUtf8(rs.getString("nom_pais"));
                 usu[3] = toUtf8(rs.getString("dni_usu"));
                 usu[4] = toUtf8(rs.getString("nom_tip"));
+                usu[5] = toUtf8(rs.getString("codi_pais"));
+                usu[6] = toUtf8(rs.getString("id_tip"));
                 res.put(id, (String[])usu.clone());
             }
             stat.close();
@@ -91,6 +93,40 @@ public class BackofficeDB {
         return res;
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza un usuari.">
+    /**
+     * Actualitza un usuari
+     * @param nom Noms de l'usuari
+     * @param email Adreces d'email de l'usuari
+     * @param nac Nacionalitat de l'usuari
+     * @param dni DNIs de l'usuari
+     * @param tipus Tipus d'usuari de l'usuari
+     * @param id ID l'usuari
+     * @return Les files actualitzades
+     */
+    public int actualitzarUsuari(String nom, String email, String nac, String dni, String tipus, String id) {
+        int res = 0;
+        String update = ""
+            + "UPDATE usuari SET "
+            + "nom_usu = '" + nom + "', "
+            + "email_usu = '" + email + "', "
+            + "nacionalitat_usu = '" + nac + "', "
+            + "dni_usu = '" + dni + "', "
+            + "id_tipus_usuari = " + tipus + " "
+            + "WHERE id_usuari = " + id + ";";
+        try {
+            connect();
+            res = stat.executeUpdate(update);
+            stat.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold> 
 
     // <editor-fold defaultstate="collapsed" desc="Mètode que elimina una fila.">
     /**
