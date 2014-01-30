@@ -1,2 +1,1 @@
 -UTF8 per resultats de la bbdd
--Obtenir ruta mitjançant jsp per ocultar camps del header

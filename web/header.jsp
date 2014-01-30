@@ -1,8 +1,17 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="hotel1beans.AccessDB"%>
 <body>
     <jsp:useBean id="bbdd" class="hotel1beans.AccessDB" scope="request" /><%
-            HashMap paisos = bbdd.getPaisos(); %>
+            HashMap paisos = bbdd.getPaisos();
+            boolean isBackoffice = request.getRequestURI().contains("backoffice");
+            boolean isLogin = request.getRequestURI().contains("login");
+            if (isBackoffice) {
+                String __tipus = (String)session.getAttribute("tipus");
+            //Si la sessió està buida o l'usuari no és de tipus administrador, redirigim a la pàgina de login
+            if ((__tipus == null || !__tipus.equals(AccessDB.TIPUS_ADMIN)) && !isLogin)
+                response.sendRedirect("login.jsp");
+        }%>
     <header>
         <div class="main">
             <a href="../home/home.jsp">
@@ -15,13 +24,23 @@
                         <a href="#" id="nomVal" class="gris right"><%=nom%><div class="arrow arrowDown"></div></a><br />
                         <a href="../logout" id="logoutBtn" class="gris" style="display: none;">Tancar sessió</a><%
                     } else { %>
-                        <a data-reveal-id="loginModal" id="loginBtn">Iniciar sessió</a>
-                        <span class="separator defCurs">·</span>
-                        <a data-reveal-id="signupModal" id="signupBtn">Registrar-se</a><%
+                        <a data-reveal-id="loginModal" id="loginBtn">Iniciar sessió</a><%
+                        if (!isBackoffice) { %>
+                            <span class="separator defCurs">·</span>
+                            <a data-reveal-id="signupModal" id="signupBtn">Registrar-se</a><%
+                        }
                     } %>
                 </h4>
             </div>
-        </div>
+        </div><%
+        //Mostram en el backoffice els botons de navegació entre pàgines
+        if (isBackoffice && !isLogin) { %>
+            <div class="main backBtns">
+                <a type="button" href="usuaris.jsp">Usuaris</a>
+                <a type="button" href="tipusUsuaris.jsp">Tipus d'usuaris</a>
+                <a type="button" href="descomptes.jsp">Descomptes</a>
+            </div><%
+        } %>
     </header>
     <!-- Popup de login -->
     <div id="loginModal" class="reveal-modal medium center">
