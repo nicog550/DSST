@@ -23,8 +23,10 @@
                     if (nom != null) { %>
                         <a href="#" id="nomVal" class="gris right"><%=nom%><div class="arrow arrowDown"></div></a><br />
                         <a href="../logout" id="logoutBtn" class="gris" style="display: none;">Tancar sessió</a><%
-                    } else { %>
-                        <a data-reveal-id="loginModal" id="loginBtn">Iniciar sessió</a><%
+                    } else { 
+                        if (!(isBackoffice && isLogin)) { %>
+                            <a data-reveal-id="loginModal" id="loginBtn">Iniciar sessió</a><%
+                        }
                         if (!isBackoffice) { %>
                             <span class="separator defCurs">·</span>
                             <a data-reveal-id="signupModal" id="signupBtn">Registrar-se</a><%

@@ -42,3 +42,11 @@ div.backBtns a {
     font-size: 18px;
 }
 
+.submitBtn {
+    height: 40px !important;
+}
+
+.add {
+    margin-top: 30px;
+}
+

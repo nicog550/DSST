@@ -37,4 +37,19 @@ public class Utils/* implements Serializable*/ {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }
+    
+    /**
+     * Uneix els elements d'un array d'Strings
+     * @param s L'array d'entrada
+     * @param glue L'element per concatenar
+     * @return L'String resultant
+     */
+    public static String join(String[] s, String glue) {
+        int k = s.length;
+        if (k == 0) return null;
+        StringBuilder out = new StringBuilder();
+        out.append(s[0]);
+        for (int x = 1; x < k; ++x) out.append(glue).append(s[x]);
+        return out.toString();
+    }
 }

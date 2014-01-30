@@ -11,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,6 +157,40 @@ public class BackofficeDB {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Mètode que insereix una fila.">
+    /**
+     * Efectua una baixa
+     * @param taula La taula d'on eliminar
+     * @param params Els elements de la fila a inserir
+     * @return L'ID de la fila inserida
+     */
+    public int alta(String taula, String[] params) {
+        int res = 0;
+        String elems = Utils.join(params, "', '");
+        String columnes;
+        switch (taula) {
+            case "tipus_usuari": columnes = "nom_tip"; break;
+            case "descompte": columnes = "id_descompte"; break;
+            default: columnes = ""; break;
+        }
+        try {
+            connect();
+            String insert = "INSERT INTO " + taula + "(" + columnes + ") VALUES('" + elems + "');";
+            System.out.println(insert);
+            stat.executeUpdate(insert, Statement.RETURN_GENERATED_KEYS);
+            ResultSet keys = stat.getGeneratedKeys();    
+            keys.next();  
+            res = keys.getInt(1);
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Mètodes per desconnectarse de la bbdd i per convertir a UTF-8.">
     private void disconnect() {
         try {
