@@ -8,9 +8,9 @@ $(document).ready(function() {
      * @returns {void}
      */
     function prepararAfegir() {
-        $("#addTipus").on('click', function(e) {
+        $("#addEstat").on('click', function(e) {
             e.preventDefault();
-            $("#addTip").reveal();
+            $("#addEst").reveal();
         });
     }
     
@@ -19,15 +19,15 @@ $(document).ready(function() {
      * @returns {void}
      */
     function prepararEnviamentInsercio() {
-        $("#addTipSubmit").on('click', function() {
+        $("#addEstSubmit").on('click', function() {
             Funcions.llevarErrors();
             var errors = false;
             if ($("#nomAdd").val() === '') {
                 Funcions.mostrarError($("#nomAdd"), 'El nom és obligatori'); errors = true;
             }
             if (!errors) {
-                var url = '../altes?params=' + $("#nomAdd").val() + '&taula=tipus_usuari';
-                $("#addTip").trigger('reveal:close');
+                var url = '../altes?params=' + $("#nomAdd").val() + '&taula=estat_reserva';
+                $("#addEst").trigger('reveal:close');
                 Funcions.peticioAjax(url, addOk, Funcions.revealError);
             }
         });
@@ -61,7 +61,7 @@ $(document).ready(function() {
         $(".deleteBtn").unbind('click');
         $(".deleteBtn").on('click', function() {
            id = $(this).attr('id').replace('delete-', ''); //Prenem l'id de l'usuari
-           var url = '../baixes?id=' + id + '&taula=tipus_usuari';
+           var url = '../baixes?id=' + id + '&taula=estat_reserva';
            Funcions.peticioAjax(url, respostaEliminacio, Funcions.revealError);
         });
     

@@ -92,6 +92,63 @@ public class BackofficeDB {
         return res;
     }
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna totes les reserves.">
+    public HashMap getReserves() {
+        HashMap res = new HashMap<>();
+        try {
+            connect();
+            String select = ""
+                    + "SELECT id_usuari, nom_usu, email_usu, nom_pais, codi_pais, dni_usu, nom_tip, u.id_tipus_usuari AS id_tip"
+                    + " FROM usuari AS u"
+                    + " INNER JOIN pais as p"
+                    + "     ON u.nacionalitat_usu = p.codi_pais"
+                    + " INNER JOIN tipus_usuari AS t"
+                    + "     ON u.id_tipus_usuari = t.id_tipus_usuari"
+                    + " ORDER BY id_usuari";
+            ResultSet rs = stat.executeQuery(select);
+            String[] usu = new String[7]; //String que contindrà les dades de l'usuari
+            while (rs.next()) {
+                String id = toUtf8(rs.getString("id_usuari"));
+                usu[0] = toUtf8(rs.getString("nom_usu"));
+                usu[1] = toUtf8(rs.getString("email_usu"));
+                usu[2] = toUtf8(rs.getString("nom_pais"));
+                usu[3] = toUtf8(rs.getString("dni_usu"));
+                usu[4] = toUtf8(rs.getString("nom_tip"));
+                usu[5] = toUtf8(rs.getString("codi_pais"));
+                usu[6] = toUtf8(rs.getString("id_tip"));
+                res.put(id, (String[])usu.clone());
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els estats de reserves.">
+    public HashMap getEstatsReserva() {
+        HashMap res = new HashMap<>();
+        try {
+            connect();
+            ResultSet rs = stat.executeQuery("SELECT * FROM estat_reserva;");
+            while (rs.next()) {
+                String id = toUtf8(rs.getString("id_estat_reserva"));
+                String nom = toUtf8(rs.getString("nom_est"));
+                res.put(id, nom);
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza un usuari.">
     /**
@@ -141,6 +198,7 @@ public class BackofficeDB {
             case "usuari": pk = "id_usuari"; break;
             case "tipus_usuari": pk = "id_tipus_usuari"; break;
             case "descompte": pk = "id_descompte"; break;
+            case "estat_reserva": pk = "id_estat_reserva"; break;
             default: pk = ""; break;
         }
         try {
@@ -170,7 +228,8 @@ public class BackofficeDB {
         String columnes;
         switch (taula) {
             case "tipus_usuari": columnes = "nom_tip"; break;
-            case "descompte": columnes = "id_descompte"; break;
+            case "descompte": columnes = "concepte_des, valor_des"; break;
+            case "estat_reserva": columnes = "nom_est"; break;
             default: columnes = ""; break;
         }
         try {

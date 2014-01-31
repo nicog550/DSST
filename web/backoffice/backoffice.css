@@ -33,8 +33,10 @@ td {
 }
 
 div.backBtns {
-    top: 80px;
+    top: 40px;
     z-index: 1;
+    left: 170px;
+    display: inline-block;
 }
 
 div.backBtns a {

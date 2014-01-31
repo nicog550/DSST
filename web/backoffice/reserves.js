@@ -47,7 +47,6 @@ $(document).ready(function() {
                 </tr>';
                 $("tbody").append(html);
                 $(html).hide().slideToggle(800);
-                prepararEliminacio();
             }
         }
     }
@@ -58,7 +57,6 @@ $(document).ready(function() {
      */
     function prepararEliminacio() {
         var id;
-        $(".deleteBtn").unbind('click');
         $(".deleteBtn").on('click', function() {
            id = $(this).attr('id').replace('delete-', ''); //Prenem l'id de l'usuari
            var url = '../baixes?id=' + id + '&taula=tipus_usuari';
