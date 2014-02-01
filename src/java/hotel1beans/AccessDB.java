@@ -197,18 +197,17 @@ public class AccessDB {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els tipus d'usuaris.">
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els tipus d'usuaris excepte 'Admin'.">
     public HashMap getTipusUsuaris() {
         HashMap res = new HashMap<>();
         try {
             connect();
-            ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari;");
-            String[] dades = new String[2];
+            ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari WHERE nom_tip <> 'Admin';");
+            String id, nom;
             while (rs.next()) {
-                String id = toUtf8(rs.getString("id_tipus_usuari"));
-                dades[0] = toUtf8(rs.getString("nom_tip"));
-                dades[1] = rs.getString("descompte_tip");
-                res.put(id, dades.clone());
+                id = toUtf8(rs.getString("id_tipus_usuari"));
+                nom = toUtf8(rs.getString("nom_tip"));
+                res.put(id, nom);
             }
             stat.close();
         } catch (SQLException ex) {

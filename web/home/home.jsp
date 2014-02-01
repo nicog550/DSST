@@ -65,20 +65,5 @@
             <p class="lead">En <span id="timeout">2</span> <span id="segons">segons</span> us durem a la pàgina de reserves</p>
             <a class="close-reveal-modal">&#215;</a>
 	</div>
-
-        <%  //String user = (String) session.getAttribute("usuario");
-            //String passwd = (String) session.getAttribute("clave");
-            //if ((user == null) || (passwd == null)) {
-            //    response.sendRedirect("identificacion.jsp");
-            //}
-        %>
-
-        <%
-            /*Integer nivell = (Integer) session.getAttribute("nivel");
-            if (nivell != null) {
-                out.print("El nivel de permiso es: " + nivell);
-            }*/
-        %>
-        <%//@include file="../footer.jsp" %>
     </body>
 </html>

@@ -95,7 +95,24 @@ public class BackofficeDB {
 
     // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els tipus d'usuaris.">
     public HashMap getTipusUsuaris() {
-        return new AccessDB().getTipusUsuaris();
+        HashMap res = new HashMap<>();
+        try {
+            connect();
+            ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari;");
+            String[] dades = new String[2];
+            while (rs.next()) {
+                String id = toUtf8(rs.getString("id_tipus_usuari"));
+                dades[0] = toUtf8(rs.getString("nom_tip"));
+                dades[1] = rs.getString("descompte_tip");
+                res.put(id, dades.clone());
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
     }
     // </editor-fold>
 

@@ -124,39 +124,5 @@
                 </form> 
             </div>
         </div>
-        <!-- Modal que mostra l'error d'AJAX -->
-        <div id="ajaxErrModal" class="reveal-modal large">
-            <h2 class="error">Ups!</h2>
-            <p class="lead">Sembla que hi ha hagut un error comprovant la disponibilitat</p>
-            <p>Tornau a intentar-ho més tard</p>
-            <a class="close-reveal-modal">&#215;</a>
-	</div>
-        <!-- Modal que mostra el missatge de no disponibilitat -->
-        <div id="noDispModal" class="reveal-modal large">
-            <h2>No hi ha disponibilitat en les dates que heu triat</h2>
-            <p class="lead">Podeu provar per unes dates diferents</p>
-            <a class="close-reveal-modal">&#215;</a>
-	</div>
-        <!-- Modal que mostra el missatge de disponibilitat trobada -->
-        <div id="siDispModal" class="reveal-modal large">
-            <h2>S'ha trobat disponibilitat!</h2>
-            <p class="lead">En <span id="timeout">5</span> <span id="segons">segons</span> us durem a la pàgina de reserves</p>
-            <a class="close-reveal-modal">&#215;</a>
-	</div>
-
-        <%  //String user = (String) session.getAttribute("usuario");
-            //String passwd = (String) session.getAttribute("clave");
-            //if ((user == null) || (passwd == null)) {
-            //    response.sendRedirect("identificacion.jsp");
-            //}
-        %>
-
-        <%
-            /*Integer nivell = (Integer) session.getAttribute("nivel");
-            if (nivell != null) {
-                out.print("El nivel de permiso es: " + nivell);
-            }*/
-        %>
-        <%//@include file="../footer.jsp" %>
     </body>
 </html>

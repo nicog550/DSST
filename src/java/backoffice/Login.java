@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import hotel1beans.AccessDB;
 import hotel1beans.Utils;
-import javax.servlet.http.HttpSession;
 
 /**
  * Efectua el login d'usuari i el guarda a l'objecte session
@@ -77,7 +76,7 @@ public class Login extends HttpServlet {
                     Utils.setSessio(request, strArr[0], email, strArr[2], strArr[1], strArr[4], strArr[3]);
                     response.sendRedirect("backoffice/reserves.jsp");
                 } else { //Si no, recarregam
-                    request.getRequestDispatcher("backoffice/index.jsp").forward(request,response);
+                    response.sendRedirect("home/home.jsp");
                 }
             }
         }
