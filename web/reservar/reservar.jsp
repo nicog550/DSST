@@ -16,8 +16,8 @@
         <jsp:useBean id="db" class="hotel1beans.AccessDB" scope="request" />
         <%@include file="../header.jsp" %><%
         //Si no arribam aquí per petició POST redirigim a la home
-        String inici, fi, email, nac, dni, tip;
-        inici = fi = email = nac = dni = tip = "";
+        String inici, fi, email, nac, dni, tip, preuPers;
+        inici = fi = email = nac = dni = tip = preuPers = "";
         int places = 0;
         HashMap tipus;
         tipus = new HashMap();
@@ -32,6 +32,7 @@
             nac = (String)session.getAttribute("nacionalitat");
             dni = (String)session.getAttribute("dni");
             tip = (String)session.getAttribute("tipus");
+            preuPers = db.getPreuPersona();
         }%>
         <div class="main" style="text-align: left;">
             <div>
@@ -88,17 +89,24 @@
                                         </div>
                                         <div class="inlineBlock">
                                             <label for="tip-<%=i%>">Tipus</label>
-                                            <select id="tip-<%=i%>" name="tip-<%=i%>">
+                                            <select id="tip-<%=i%>" name="tip-<%=i%>" class="selectTipus">
                                                 <option value="0">-- Triau-ne un --</option><%
                                                 iteradorTipus = tipus.keySet().iterator();
                                                 Object idTipus;
                                                 while (iteradorTipus.hasNext()) {
                                                     idTipus = iteradorTipus.next();
                                                     selected = (i == 0 && tip != null && tip.equals(idTipus)) ? " selected=\"selected\"" : "";%>
-                                                    <option value="<%=idTipus%>"<%=selected%>><%=tipus.get(idTipus)%></option><%
+                                                    <option value="<%=idTipus%>"<%=selected%>><%=((String[])tipus.get(idTipus))[0]%></option><%
                                                 } %>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div id="import-<%=i%>" class="row nds">
+                                        <span>Import: </span><span><%=preuPers%>&euro;</span>&emsp;&emsp;
+                                        <span>
+                                            <span>Descompte: </span><span id="descompte-<%=i%>"></span>&euro;&emsp;&emsp;
+                                            <span>Import final: </span><span id="final-<%=i%>" class="importsFinals nds"></span>&euro;
+                                        </span>
                                     </div><%
                                     if (i != places - 1) { %>
                                         <hr /><%
@@ -112,6 +120,12 @@
                             </div><%
                         } %>
                     </fieldset>
+                    <fieldset id="importSet" class="rightColumn">
+                        <div class="center" style="padding-bottom: 0px;">
+                            <h3>Import total:<br /><span id="importTotal">0</span> &euro;</h3>
+                            <input type="hidden" id="preuFinal" name="preuFinal" />
+                        </div>
+                    </fieldset>
                     <fieldset id="submitSet" class="rightColumn">
                         <div class="center">
                             <button type="submit" class="submitBtn">Reservar</button>
@@ -122,6 +136,17 @@
                         <button id="loginChange" class="nds"></button>
                     </div>
                 </form> 
+            </div>
+        </div>
+        <div>
+            <div><%
+                iteradorTipus = tipus.keySet().iterator();
+                Object idTipus;
+                while (iteradorTipus.hasNext()) {
+                    idTipus = iteradorTipus.next();%>
+                    <input type="hidden" id="descTip-<%=idTipus%>" class="hiddenTips" value="<%=((String[])tipus.get(idTipus))[1]%>" /><%
+                } %>
+                <input type="hidden" id="preuPers" value="<%=preuPers%>" />
             </div>
         </div>
     </body>

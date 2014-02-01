@@ -203,11 +203,12 @@ public class AccessDB {
         try {
             connect();
             ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari WHERE nom_tip <> 'Admin';");
-            String id, nom;
+            String[] dades = new String[2];
             while (rs.next()) {
-                id = toUtf8(rs.getString("id_tipus_usuari"));
-                nom = toUtf8(rs.getString("nom_tip"));
-                res.put(id, nom);
+                String id = toUtf8(rs.getString("id_tipus_usuari"));
+                dades[0] = toUtf8(rs.getString("nom_tip"));
+                dades[1] = rs.getString("descompte_tip");
+                res.put(id, dades.clone());
             }
             stat.close();
         } catch (SQLException ex) {
@@ -218,6 +219,27 @@ public class AccessDB {
         return res;
     }
     // </editor-fold>  
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna el preu per persona de les habitacions.">
+    public String getPreuPersona() {
+        String res = "";
+        try {
+            connect();
+            ResultSet rs = stat.executeQuery("SELECT valor_imp FROM import_habitacio WHERE places_hab = 2;");
+            while (rs.next()) {
+                res = rs.getString("valor_imp");
+                res = Integer.toString((int)(Double.parseDouble(res) / 2));
+                break;
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold> 
     
     // <editor-fold defaultstate="collapsed" desc="Mètode que crea una reserva.">
     /**
@@ -271,8 +293,8 @@ public class AccessDB {
         int[] ids = new int[places]; //Contindrà l'id de cada usuari
         for (int i = 0; i < places; i++) {
             insert = ""
-            + "INSERT INTO usuari (nom_usu, email_usu, nacionalitat_usu, dni_usu, id_tipus_usuari)"
-            + " SELECT '" + noms[i] + "', '" + emails[i] + "', '" + nacionalitats[i] + "', '" + dnis[i] + "', " + tipus[i]
+            + "INSERT INTO usuari (nom_usu, email_usu, contrasenya_usu, nacionalitat_usu, dni_usu, id_tipus_usuari)"
+            + " SELECT '" + noms[i] + "', '" + emails[i] + "', '', '" + nacionalitats[i] + "', '" + dnis[i] + "', " + tipus[i]
             + "     FROM dual"
             + "     WHERE NOT EXISTS (SELECT 1"
             + "         FROM usuari"

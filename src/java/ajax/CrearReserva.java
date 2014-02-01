@@ -81,11 +81,15 @@ public class CrearReserva extends HttpServlet {
             tipus[i] = Integer.parseInt(request.getParameter("tip-" + i));
         }
         
-        String str = new AccessDB().crearReserva(noms, emails, dnis, nacionalitats, tipus, dataIni, dataFi) ? "true" : "false";
+        if (new AccessDB().crearReserva(noms, emails, dnis, nacionalitats, tipus, dataIni, dataFi)) {
+            request.getSession().setAttribute("preu", request.getParameter("preuFinal"));
+            response.sendRedirect("reservaOk/reservaOk.jsp");
+        } else {
+            response.setContentType("text/xml");
+            response.setHeader("Cache-Control", "no-cache");
+            response.getWriter().write("<reserva>S'ha produit un error</reserva>");
+        }
 
-        response.setContentType("text/xml");
-        response.setHeader("Cache-Control", "no-cache");
-        response.getWriter().write("<reserva>" + str + "</reserva>");
     }
 
 }

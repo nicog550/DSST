@@ -13,8 +13,12 @@ body {
     top: 83px;
 }
 
-#submitSet {
+#importSet {
     top: 223px;
+}
+
+#submitSet {
+    top: 332px;
 }
 
 button.submitBtn {
