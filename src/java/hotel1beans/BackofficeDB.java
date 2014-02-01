@@ -206,6 +206,32 @@ public class BackofficeDB {
     }
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza un tipus d'usuari.">
+    /**
+     * Actualitza un tipus d'usuari
+     * @param params Paràmetres a actualitzar
+     * @param id ID de l'usuari
+     * @return Les files actualitzades
+     */
+    public int actualitzarTipusUsuari(String[] params, String id) {
+        int res = 0;
+        String update = ""
+            + "UPDATE tipus_usuari SET "
+            + "descompte_tip = " + params[0] + " "
+            + "WHERE id_tipus_usuari = " + id + ";";
+        try {
+            connect();
+            res = stat.executeUpdate(update);
+            stat.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza una reserva.">
     /**
      * Actualitza una reserva
@@ -291,8 +317,8 @@ public class BackofficeDB {
 
     // <editor-fold defaultstate="collapsed" desc="Mètode que insereix una fila.">
     /**
-     * Efectua una baixa
-     * @param taula La taula d'on eliminar
+     * Efectua una alta
+     * @param taula La taula on inserir
      * @param params Els elements de la fila a inserir
      * @return L'ID de la fila inserida
      */
@@ -301,7 +327,7 @@ public class BackofficeDB {
         String elems = Utils.join(params, "', '");
         String columnes;
         switch (taula) {
-            case "tipus_usuari": columnes = "nom_tip"; break;
+            case "tipus_usuari": columnes = "nom_tip, descompte_tip"; break;
             case "descompte": columnes = "concepte_des, valor_des"; break;
             case "estat_reserva": columnes = "nom_est"; break;
             default: columnes = ""; break;
@@ -313,7 +339,7 @@ public class BackofficeDB {
             stat.executeUpdate(insert, Statement.RETURN_GENERATED_KEYS);
             ResultSet keys = stat.getGeneratedKeys();    
             keys.next();  
-            res = keys.getInt(1);
+            res = keys.getInt(1); //Prenem la clau primària de la fila inserida
             stat.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

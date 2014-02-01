@@ -35,10 +35,8 @@ td {
 }
 
 div.backBtns {
-    top: 25px;
+    top: 80px;
     z-index: 1;
-    display: inline-block;
-    width: inherit !important;
 }
 
 div.backBtns a {

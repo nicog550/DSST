@@ -20,19 +20,23 @@
                     <tr>
                         <th><span>Id</span></th>
                         <th><span>Nom</span></th>
+                        <th><span>Descompte</span></th>
+                        <th><span>Editar</span></th>
                         <th><span>Eliminar</span></th>
                     </tr>
                 </thead>
                 <tbody><%
                     Iterator<String> it = tipus.keySet().iterator();
                     Object idTip;
-                    String tip;
+                    String[] tip;
                     while (it.hasNext()) {
                         idTip = it.next();
-                        tip = (String)tipus.get(idTip); %>
+                        tip = (String[])tipus.get(idTip); %>
                         <tr id="fila-<%=idTip%>">
                             <td id="id-<%=idTip%>"><span><%=idTip%></span></td>
-                            <td id="nom-<%=idTip%>"><span><%=tip%></span></td>
+                            <td id="nom-<%=idTip%>"><span><%=tip[0]%></span></td>
+                            <td><span id="desc-<%=idTip%>"><%=tip[1]%></span><span> &percnt;</span></td>
+                            <td><button id="edit-<%=idTip%>" class="editBtn"></button></td>
                             <td><button id="delete-<%=idTip%>" class="deleteBtn"></button></td>
                         </tr><%
                     } %>
@@ -40,17 +44,41 @@
             </table>
             <button href="#" id="addTipus" class="right add submitBtn" style="margin-right: 110px;">Afegir tipus</button>
         </div>
-        <!-- Formulari d'edició d'usuaris -->
+        <!-- Formulari per afegir tipus -->
         <div id="addTip" class="reveal-modal medium">
             <h2>Afegir tipus</h2>
             <div class="row">
                 <div class="inlineBlock">
-                    <label for="nomEdit">Nom</label>
-                    <input type="text" id="nomAdd" style="width: 250px;" />
+                    <label for="nomAdd">Nom</label>
+                    <input type="text" id="nomAdd" style="width: 200px;" />
+                </div>
+                <div class="inlineBlock">
+                    <label for="descAdd">Descompte</label>
+                    <input type="text" id="descAdd" style="width: 50px;" /><span>&percnt;</span>
                 </div>
             </div>
             <div class="center">
                 <button id="addTipSubmit" class="submitBtn">Guardar</button>
+            </div>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+        <!-- Formulari d'edició de descomptes dels tipus -->
+        <div id="editTip" class="reveal-modal medium">
+            <h2>Editar descompte</h2>
+            <div>
+                <div class="row">
+                    <div class="inlineBlock">
+                        <label for="idEdit">Id</label>
+                        <input type="text" id="idEdit" disabled="disabled" style="width: 50px;" />
+                    </div>
+                    <div class="inlineBlock">
+                        &emsp;<label for="descEdit">Descompte</label>
+                        <input type="text" id="descEdit" style="width: 50px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <button id="editTipSubmit" class="submitBtn">Guardar</button>
             </div>
             <a class="close-reveal-modal">&#215;</a>
         </div>

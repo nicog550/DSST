@@ -203,10 +203,12 @@ public class AccessDB {
         try {
             connect();
             ResultSet rs = stat.executeQuery("SELECT * FROM tipus_usuari;");
+            String[] dades = new String[2];
             while (rs.next()) {
                 String id = toUtf8(rs.getString("id_tipus_usuari"));
-                String nom = toUtf8(rs.getString("nom_tip"));
-                res.put(id, nom);
+                dades[0] = toUtf8(rs.getString("nom_tip"));
+                dades[1] = rs.getString("descompte_tip");
+                res.put(id, dades.clone());
             }
             stat.close();
         } catch (SQLException ex) {

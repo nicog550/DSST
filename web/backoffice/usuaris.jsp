@@ -10,10 +10,9 @@
         <script type="text/javascript" src="usuaris.js"></script>
     </head>
     <body>
-        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" />
-        <jsp:useBean id="adb" class="hotel1beans.AccessDB" scope="request" /><%
+        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" /><%
             HashMap usuaris = bdb.getUsuaris();
-            HashMap tipus = adb.getTipusUsuaris(); %>
+            HashMap tipus = bdb.getTipusUsuaris(); %>
         <%@include file="../header.jsp" %>
         <div class="main">
             <h1 class="left">Usuaris</h1>
@@ -98,7 +97,7 @@
                             Object idTipus;
                             while (iteradorTipus.hasNext()) {
                                 idTipus = iteradorTipus.next(); %>
-                                <option value="<%=idTipus%>"><%=tipus.get(idTipus)%></option><%
+                                <option value="<%=idTipus%>"><%=((String[])tipus.get(idTipus))[0]%></option><%
                             } %>
                         </select>
                     </div>

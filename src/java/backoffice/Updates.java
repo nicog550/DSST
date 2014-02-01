@@ -76,27 +76,32 @@ public class Updates extends HttpServlet {
                 params[2] = request.getParameter("nac");
                 params[3] = request.getParameter("dni");
                 params[4] = request.getParameter("tipus");
+                taula = "Usuari";
                 break;
             case "reserva":
                 params = new String[1];
                 params[0] = request.getParameter("estat");
+                taula = "Reserva";
                 break;
             case "import_habitacio":
                 params = new String[1];
                 params[0] = request.getParameter("preu");
-                taula = "preu";
+                taula = "Preu";
+                break;
+            case "tipus_usuari":
+                params = new String[1];
+                params[0] = request.getParameter("descompte");
+                taula = "TipusUsuari";
                 break;
             default:
                 params = new String[0];
                 break;
         }
-        //Posam el primer caràcter del nom de la taula en majúscules
-        String taulaCamelCase = taula.substring(0, 1).toUpperCase() + taula.substring(1);
         Method metode;
         Class[] classes = {String[].class, String.class};
         String res;
         try {
-            metode = BackofficeDB.class.getMethod("actualitzar" + taulaCamelCase, classes);
+            metode = BackofficeDB.class.getMethod("actualitzar" + taula, classes);
             res = Integer.toString((int)metode.invoke(new BackofficeDB(), params, id));
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException ex) {
