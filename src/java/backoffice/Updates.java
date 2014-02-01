@@ -81,6 +81,11 @@ public class Updates extends HttpServlet {
                 params = new String[1];
                 params[0] = request.getParameter("estat");
                 break;
+            case "import_habitacio":
+                params = new String[1];
+                params[0] = request.getParameter("preu");
+                taula = "preu";
+                break;
             default:
                 params = new String[0];
                 break;

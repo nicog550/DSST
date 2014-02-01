@@ -154,6 +154,27 @@ public class BackofficeDB {
         return res;
     }
     // </editor-fold>  
+
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els preus.">
+    public HashMap getPreus() {
+        HashMap res = new HashMap<>();
+        try {
+            connect();
+            ResultSet rs = stat.executeQuery("SELECT * FROM import_habitacio;");
+            while (rs.next()) {
+                String id = toUtf8(rs.getString("places_hab"));
+                String valor = toUtf8(rs.getString("valor_imp"));
+                res.put(id, valor);
+            }
+            stat.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza un usuari.">
     /**
@@ -187,7 +208,7 @@ public class BackofficeDB {
     
     // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza una reserva.">
     /**
-     * Actualitza un usuari
+     * Actualitza una reserva
      * @param params Paràmetres a actualitzar
      * @param id ID de la reserva
      * @return Les files actualitzades
@@ -209,6 +230,33 @@ public class BackofficeDB {
         }
         return res;
     }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza els preus.">
+    /**
+     * Actualitza el preu d'un tipus d'habitacions
+     * @param params Paràmetres a actualitzar
+     * @param id Places de les habitacions de les quals s'ha d'actualitzar el preu
+     * @return Les files actualitzades
+     */
+    public int actualitzarPreu(String[] params, String id) {
+        int res = 0;
+        String update = ""
+            + "UPDATE import_habitacio SET "
+            + "valor_imp = " + params[0] + " "
+            + "WHERE places_hab = " + id + ";";
+        try {
+            connect();
+            res = stat.executeUpdate(update);
+            stat.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Mètode que elimina una fila.">
     /**

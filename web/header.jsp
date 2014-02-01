@@ -42,8 +42,8 @@
                 <a type="button" href="estatsReserva.jsp">Estats de reserva</a>
                 <a type="button" href="usuaris.jsp">Usuaris</a>
                 <a type="button" href="tipusUsuaris.jsp">Tipus d'usuaris</a>
+                <a type="button" href="preus.jsp">Preus</a>
                 <a type="button" href="descomptes.jsp">Descomptes</a>
-                <a type="button" href="habitacions.jsp">Habitacions</a>
             </div><%
         } %>
     </header>
