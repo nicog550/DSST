@@ -21,6 +21,8 @@ button.deleteBtn {
 
 header {
     margin-bottom: 40px;
+    height: 62px;
+    white-space: nowrap;
 }
 
 td {
@@ -33,10 +35,10 @@ td {
 }
 
 div.backBtns {
-    top: 40px;
+    top: 25px;
     z-index: 1;
-    left: 170px;
     display: inline-block;
+    width: inherit !important;
 }
 
 div.backBtns a {

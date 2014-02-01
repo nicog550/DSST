@@ -62,53 +62,52 @@
             <h2>Editar usuari</h2>
             <div><%
                 Iterator<String> iteradorTipus; %>
-                        <div class="row">
-                            <input id="idEdit" type="hidden" />
-                            <div class="inlineBlock">
-                                <label for="nomEdit">Nom</label>
-                                <input type="text" id="nomEdit" style="width: 250px;" />
-                            </div>
-                            <div class="inlineBlock">
-                                <label for="mailEdit>">Email</label>
-                                <input type="email" id="mailEdit" style="width: 200px;" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="inlineBlock">
-                                <label for="nacEdit">Nacionalitat</label>
-                                <select id="nacEdit">
-                                    <option value="0">-- Triau una --</option><%
-                                    iteradorPais = paisos.keySet().iterator();
-                                    String codi;
-                                    while (iteradorPais.hasNext()) {
-                                        codi = iteradorPais.next(); %>
-                                        <option value="<%=codi%>"><%=paisos.get(codi)%></option><%
-                                    } %>
-                                </select>
-                            </div>
-                            <div class="inlineBlock">
-                                <label for="dniEdit">DNI</label>
-                                <input type="text" maxlength="9" id="dniEdit" />
-                            </div>
-                            <div class="inlineBlock">
-                                <label for="tipEdit">Tipus</label>
-                                <select id="tipEdit">
-                                    <option value="0">-- Triau-ne un --</option><%
-                                    iteradorTipus = tipus.keySet().iterator();
-                                    Object idTipus;
-                                    while (iteradorTipus.hasNext()) {
-                                        idTipus = iteradorTipus.next(); %>
-                                        <option value="<%=idTipus%>"><%=tipus.get(idTipus)%></option><%
-                                    } %>
-                                </select>
-                            </div>
-                        </div>
+                <div class="row">
+                    <input id="idEdit" type="hidden" />
+                    <div class="inlineBlock">
+                        <label for="nomEdit">Nom</label>
+                        <input type="text" id="nomEdit" style="width: 250px;" />
                     </div>
-                    <div class="center">
-                        <button id="editUsrSubmit" class="submitBtn">Guardar</button>
+                    <div class="inlineBlock">
+                        <label for="mailEdit>">Email</label>
+                        <input type="email" id="mailEdit" style="width: 200px;" />
                     </div>
-                <a class="close-reveal-modal">&#215;</a>
+                </div>
+                <div class="row">
+                    <div class="inlineBlock">
+                        <label for="nacEdit">Nacionalitat</label>
+                        <select id="nacEdit">
+                            <option value="0">-- Triau una --</option><%
+                            iteradorPais = paisos.keySet().iterator();
+                            String codi;
+                            while (iteradorPais.hasNext()) {
+                                codi = iteradorPais.next(); %>
+                                <option value="<%=codi%>"><%=paisos.get(codi)%></option><%
+                            } %>
+                        </select>
+                    </div>
+                    <div class="inlineBlock">
+                        <label for="dniEdit">DNI</label>
+                        <input type="text" maxlength="9" id="dniEdit" />
+                    </div>
+                    <div class="inlineBlock">
+                        <label for="tipEdit">Tipus</label>
+                        <select id="tipEdit">
+                            <option value="0">-- Triau-ne un --</option><%
+                            iteradorTipus = tipus.keySet().iterator();
+                            Object idTipus;
+                            while (iteradorTipus.hasNext()) {
+                                idTipus = iteradorTipus.next(); %>
+                                <option value="<%=idTipus%>"><%=tipus.get(idTipus)%></option><%
+                            } %>
+                        </select>
+                    </div>
+                </div>
             </div>
-	</div>
+            <div class="center">
+                <button id="editUsrSubmit" class="submitBtn">Guardar</button>
+            </div>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
     </body>
 </html>

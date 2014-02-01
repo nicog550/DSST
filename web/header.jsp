@@ -37,9 +37,9 @@
         </div><%
         //Mostram en el backoffice els botons de navegació entre pàgines
         if (isBackoffice && !isLogin) { %>
-            <div class="main backBtns">
+            <div class="main backBtns left">
                 <a type="button" href="reserves.jsp">Reserves</a>
-                <a type="button" href="estatsReserva.jsp">Estats de reserves</a>
+                <a type="button" href="estatsReserva.jsp">Estats de reserva</a>
                 <a type="button" href="usuaris.jsp">Usuaris</a>
                 <a type="button" href="tipusUsuaris.jsp">Tipus d'usuaris</a>
                 <a type="button" href="descomptes.jsp">Descomptes</a>

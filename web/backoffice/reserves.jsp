@@ -10,36 +10,46 @@
         <script type="text/javascript" src="reserves.js"></script>
     </head>
     <body>
-        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" />
-        <jsp:useBean id="adb" class="hotel1beans.AccessDB" scope="request" /><%
-            HashMap tipus = adb.getTipusUsuaris(); %>
+        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" /><%
+            HashMap reserves = bdb.getReserves();
+            HashMap estats = bdb.getEstatsReserva(); %>
         <%@include file="../header.jsp" %>
         <div class="main">
-            <h1 class="left">Tipus d'usuaris</h1>
+            <h1 class="left">Reserves</h1>
             <table style="width: 100%;">
                 <thead>
                     <tr>
                         <th><span>Id</span></th>
-                        <th><span>Nom</span></th>
-                        <th><span>Eliminar</span></th>
+                        <th><span>Usuari</span></th>
+                        <th><span>Habitació</span></th>
+                        <th><span>Inici</span></th>
+                        <th><span>Fi</span></th>
+                        <th><span>Estat</span></th>
+                        <th><span>Canviar<br />estat</span></th>
                     </tr>
                 </thead>
                 <tbody><%
-                    Iterator<String> it = tipus.keySet().iterator();
-                    Object idTip;
-                    String tip;
+                    Iterator<String> it = reserves.keySet().iterator();
+                    Object idRes;
+                    String[] reserva;
                     while (it.hasNext()) {
-                        idTip = it.next();
-                        tip = (String)tipus.get(idTip); %>
-                        <tr id="fila-<%=idTip%>">
-                            <td id="id-<%=idTip%>"><span><%=idTip%></span></td>
-                            <td id="nom-<%=idTip%>"><span><%=tip%></span></td>
-                            <td><button id="delete-<%=idTip%>" class="deleteBtn"></button></td>
+                        idRes = it.next();
+                        reserva = (String[])reserves.get(idRes); %>
+                        <tr id="fila-<%=idRes%>">
+                            <td id="id-<%=idRes%>"><span><%=idRes%></span></td>
+                            <td><span><%=reserva[0]%></span></td>
+                            <td><span><%=reserva[1]%></span></td>
+                            <td><span><%=reserva[2]%></span></td>
+                            <td><span><%=reserva[3]%></span></td>
+                            <td>
+                                <span><%=reserva[4]%></span>
+                                <span id="estat-<%=idRes%>" class="nds"><%=reserva[5]%></span>
+                            </td>
+                            <td><button id="edit-<%=idRes%>" class="editBtn"></button></td>
                         </tr><%
                     } %>
                 </tbody>
             </table>
-            <button href="#" id="addTipus" class="right add submitBtn" style="margin-right: 110px;">Afegir tipus</button>
         </div>
         <!-- Formulari d'edició d'usuaris -->
         <div id="addTip" class="reveal-modal medium">
@@ -52,6 +62,35 @@
             </div>
             <div class="center">
                 <button id="addTipSubmit" class="submitBtn">Guardar</button>
+            </div>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+        <!-- Formulari d'edició de reserves -->
+        <div id="editRes" class="reveal-modal medium">
+            <h2>Editar reserva</h2>
+            <div><%
+                Iterator<String> iteradorEst; %>
+                <div class="row">
+                    <div class="inlineBlock">
+                        <label for="idEdit">Id</label>
+                        <input type="text" id="idEdit" disabled="disabled" style="width: 50px;" />
+                    </div>
+                    <div class="inlineBlock">
+                        <label for="estEdit">Estat</label>
+                        <select id="estEdit">
+                            <option value="0">-- Triau-ne un --</option><%
+                            iteradorEst = estats.keySet().iterator();
+                            Object idTipus;
+                            while (iteradorEst.hasNext()) {
+                                idTipus = iteradorEst.next(); %>
+                                <option value="<%=idTipus%>" id="editEst-<%=idTipus%>"><%=estats.get(idTipus)%></option><%
+                            } %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <button id="editResSubmit" class="submitBtn">Guardar</button>
             </div>
             <a class="close-reveal-modal">&#215;</a>
         </div>

@@ -75,7 +75,7 @@ public class Login extends HttpServlet {
                 String[] strArr = str.split("_");
                 if (strArr[3].equals(AccessDB.TIPUS_ADMIN)) {
                     Utils.setSessio(request, strArr[0], email, strArr[2], strArr[1], strArr[4], strArr[3]);
-                    response.sendRedirect("backoffice/usuaris.jsp");
+                    response.sendRedirect("backoffice/reserves.jsp");
                 } else { //Si no, recarregam
                     request.getRequestDispatcher("backoffice/index.jsp").forward(request,response);
                 }

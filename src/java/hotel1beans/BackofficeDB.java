@@ -93,30 +93,35 @@ public class BackofficeDB {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Mètode que retorna tots els tipus d'usuaris.">
+    public HashMap getTipusUsuaris() {
+        return new AccessDB().getTipusUsuaris();
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Mètode que retorna totes les reserves.">
     public HashMap getReserves() {
         HashMap res = new HashMap<>();
         try {
             connect();
             String select = ""
-                    + "SELECT id_usuari, nom_usu, email_usu, nom_pais, codi_pais, dni_usu, nom_tip, u.id_tipus_usuari AS id_tip"
-                    + " FROM usuari AS u"
-                    + " INNER JOIN pais as p"
-                    + "     ON u.nacionalitat_usu = p.codi_pais"
-                    + " INNER JOIN tipus_usuari AS t"
-                    + "     ON u.id_tipus_usuari = t.id_tipus_usuari"
-                    + " ORDER BY id_usuari";
+                    + "SELECT id_reserva, email_usu, id_habitacio, DATE(data_inici_res) AS inici, DATE(data_fi_res) AS fi, nom_est, er.id_estat_reserva"
+                    + " FROM reserva AS r"
+                    + " INNER JOIN usuari as u"
+                    + "     ON u.id_usuari = r.id_usuari"
+                    + " INNER JOIN estat_reserva AS er"
+                    + "     ON er.id_estat_reserva = r.id_estat_reserva"
+                    + " ORDER BY data_inici_res";
             ResultSet rs = stat.executeQuery(select);
-            String[] usu = new String[7]; //String que contindrà les dades de l'usuari
+            String[] usu = new String[6]; //String que contindrà les dades de la reserva
             while (rs.next()) {
-                String id = toUtf8(rs.getString("id_usuari"));
-                usu[0] = toUtf8(rs.getString("nom_usu"));
-                usu[1] = toUtf8(rs.getString("email_usu"));
-                usu[2] = toUtf8(rs.getString("nom_pais"));
-                usu[3] = toUtf8(rs.getString("dni_usu"));
-                usu[4] = toUtf8(rs.getString("nom_tip"));
-                usu[5] = toUtf8(rs.getString("codi_pais"));
-                usu[6] = toUtf8(rs.getString("id_tip"));
+                String id = toUtf8(rs.getString("id_reserva"));
+                usu[0] = toUtf8(rs.getString("email_usu"));
+                usu[1] = toUtf8(rs.getString("id_habitacio"));
+                usu[2] = toUtf8(rs.getString("inici"));
+                usu[3] = toUtf8(rs.getString("fi"));
+                usu[4] = toUtf8(rs.getString("nom_est"));
+                usu[5] = toUtf8(rs.getString("er.id_estat_reserva"));
                 res.put(id, (String[])usu.clone());
             }
             stat.close();
@@ -153,23 +158,19 @@ public class BackofficeDB {
     // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza un usuari.">
     /**
      * Actualitza un usuari
-     * @param nom Noms de l'usuari
-     * @param email Adreces d'email de l'usuari
-     * @param nac Nacionalitat de l'usuari
-     * @param dni DNIs de l'usuari
-     * @param tipus Tipus d'usuari de l'usuari
-     * @param id ID l'usuari
+     * @param params Paràmetres a actualitzar
+     * @param id ID de l'usuari
      * @return Les files actualitzades
      */
-    public int actualitzarUsuari(String nom, String email, String nac, String dni, String tipus, String id) {
+    public int actualitzarUsuari(String[] params, String id) {
         int res = 0;
         String update = ""
             + "UPDATE usuari SET "
-            + "nom_usu = '" + nom + "', "
-            + "email_usu = '" + email + "', "
-            + "nacionalitat_usu = '" + nac + "', "
-            + "dni_usu = '" + dni + "', "
-            + "id_tipus_usuari = " + tipus + " "
+            + "nom_usu = '" + params[0] + "', "
+            + "email_usu = '" + params[1] + "', "
+            + "nacionalitat_usu = '" + params[2] + "', "
+            + "dni_usu = '" + params[3] + "', "
+            + "id_tipus_usuari = " + params[4] + " "
             + "WHERE id_usuari = " + id + ";";
         try {
             connect();
@@ -183,6 +184,31 @@ public class BackofficeDB {
         return res;
     }
     // </editor-fold> 
+    
+    // <editor-fold defaultstate="collapsed" desc="Mètode que actualitza una reserva.">
+    /**
+     * Actualitza un usuari
+     * @param params Paràmetres a actualitzar
+     * @param id ID de la reserva
+     * @return Les files actualitzades
+     */
+    public int actualitzarReserva(String[] params, String id) {
+        int res = 0;
+        String update = ""
+            + "UPDATE reserva SET "
+            + "id_estat_reserva = " + params[0] + " "
+            + "WHERE id_reserva = " + id + ";";
+        try {
+            connect();
+            res = stat.executeUpdate(update);
+            stat.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Mètode que elimina una fila.">
     /**

@@ -10,9 +10,8 @@
         <script type="text/javascript" src="tipusUsuaris.js"></script>
     </head>
     <body>
-        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" />
-        <jsp:useBean id="adb" class="hotel1beans.AccessDB" scope="request" /><%
-            HashMap tipus = adb.getTipusUsuaris(); %>
+        <jsp:useBean id="bdb" class="hotel1beans.BackofficeDB" scope="request" /><%
+            HashMap tipus = bdb.getTipusUsuaris(); %>
         <%@include file="../header.jsp" %>
         <div class="main">
             <h1 class="left">Tipus d'usuaris</h1>

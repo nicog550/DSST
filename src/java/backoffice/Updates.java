@@ -64,23 +64,35 @@ public class Updates extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String id = request.getParameter("id");
-        String nom = request.getParameter("nom");
-        String email = request.getParameter("email");
-        String nac = request.getParameter("nac");
-        String dni = request.getParameter("dni");
-        String tipus = request.getParameter("tipus");
+        
+        String[] params;
         String taula = request.getParameter("taula");
+        String id = request.getParameter("id");
+        switch (taula) {
+            case "usuari":
+                params = new String[5];
+                params[0] = request.getParameter("nom");
+                params[1] = request.getParameter("email");
+                params[2] = request.getParameter("nac");
+                params[3] = request.getParameter("dni");
+                params[4] = request.getParameter("tipus");
+                break;
+            case "reserva":
+                params = new String[1];
+                params[0] = request.getParameter("estat");
+                break;
+            default:
+                params = new String[0];
+                break;
+        }
         //Posam el primer caràcter del nom de la taula en majúscules
         String taulaCamelCase = taula.substring(0, 1).toUpperCase() + taula.substring(1);
         Method metode;
-        Class[] classes = new Class[6];
-        for (int i = 0; i < classes.length; i++) classes[i] = String.class;
+        Class[] classes = {String[].class, String.class};
         String res;
         try {
             metode = BackofficeDB.class.getMethod("actualitzar" + taulaCamelCase, classes);
-            res = Integer.toString((int)metode.invoke(new BackofficeDB(), nom, email, nac, dni, tipus, id));
+            res = Integer.toString((int)metode.invoke(new BackofficeDB(), params, id));
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException ex) {
             res = ex.getClass() + ": " + ex.getMessage();
