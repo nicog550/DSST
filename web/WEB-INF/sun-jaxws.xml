@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
-  <endpoint implementation="webservice.BDSailing" name="BDSailing" url-pattern="/BDSailing"/>
   <endpoint implementation="webservice.ConnexioHotel" name="ConnexioHotel" url-pattern="/ConnexioHotel"/>
-  <endpoint implementation="webservice.BDHotel1" name="BDHotel1" url-pattern="/BDHotel1"/>
 </endpoints>
