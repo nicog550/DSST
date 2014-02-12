@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package webserverssailing;
+package webservice;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import hotel1beans.AccessDB;
-import sailingsax.XMLLector;
-import sailingsax.XMLMaker;
+import hotel1sax.XMLLector;
+import hotel1sax.XMLMaker;
 
 /**
  *

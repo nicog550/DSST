@@ -8,9 +8,27 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ConnexioHotel</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>BDHotel1</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BDSailing</servlet-name>
         <url-pattern>/BDSailing</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConnexioHotel</servlet-name>
+        <url-pattern>/ConnexioHotel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BDHotel1</servlet-name>
+        <url-pattern>/BDHotel1</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

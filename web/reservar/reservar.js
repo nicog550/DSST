@@ -1,5 +1,5 @@
 
-var hosteActual, places, descomptes, preuPers;
+var hosteActual, places;
 $(document).ready(function() {
     places = parseInt($("#placesVal").val());
     prepararValidacioFormulari();
@@ -7,57 +7,6 @@ $(document).ready(function() {
     formatDates('dataIni');
     formatDates('dataFi');
     escoltarLogin();
-    mostrarPreu();
-    prepararDescomptes();
-    actualitzarPreu(0);
-    
-    /**
-     * Guarda tots els descomptes segons el seu tipus d'usuari
-     * @returns {void}
-     */
-    function prepararDescomptes() {
-        preuPers = parseInt($("#preuPers").val());
-        descomptes = new Array();
-        $(".hiddenTips").each(function() {
-            descomptes[parseInt($(this).attr('id').replace('descTip-', '')) - 1] = parseInt($(this).val());
-        });
-    }
-    
-    /**
-     * Mostra l'import corresponent a l'usuari i el suma al total
-     * @returns {void}
-     */
-    function mostrarPreu() {
-        $(".selectTipus").on('change', function() {
-            var id = $(this).attr('id').replace('tip-', '');
-            if ($(this).val() === '0') {
-                $("#import-" + id).addClass('nds');
-                $("#final-" + id).addClass('nds');
-            } else {
-                actualitzarPreu(id);
-            }
-        });
-    }
-    
-    function actualitzarPreu(id) {
-        var tipus = parseInt($("#tip-" + id).val());
-        if (tipus !== 0) {
-            var descompte = descomptes[tipus - 1];
-            $("#descompte-" + id).text(descompte);
-            $("#final-" + id).text(preuPers - (preuPers * descompte / 100));
-            $("#final-" + id).removeClass('nds');
-            $("#import-" + id).removeClass('nds').hide().slideToggle();
-            var total = 0.0;
-            $(".importsFinals").each(function() {
-                if (!$(this).hasClass('nds')) total += parseFloat($(this).text());
-            });
-            $("#importTotal").slideToggle(function() {
-                $(this).text(total);
-                $(this).slideToggle();
-            });
-            $("#preuFinal").val(total);
-        }
-    }
     
     /**
      * Pren una data en format dd/mm/aaaa i la converteix a aaaa-mm-dd
@@ -125,8 +74,6 @@ $(document).ready(function() {
            $("#nac-0").val($("#nacionalitatVal").val());
            $("#dni-0").val($("#dniVal").val());
            $("#tip-0").val($("#tipusVal").val());
-           $("#descompte-0").text($("#tipusVal").val());
-           actualitzarPreu(0, parseInt($("#tipusVal").val()));
         });
     }
 });

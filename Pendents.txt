@@ -1,3 +1,1 @@
 -UTF8 per resultats de la bbdd
--Newsletters
--Preus i confirmacions de reserves

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sailingsax;
+package hotel1sax;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,13 @@ public class XMLMaker {
             res = res + "    </" + usutag + ">" + "\n";
         }
         res = res + "</" + usustag + ">" + "\n";
+        res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + res;
+        return res;
+    }
+    
+    public String hiHaDisp(boolean disp) {
+        String res = disp ? "true" : "false";
+        res = "<disponibilitat>" + res + "</disponibilitat>\n";
         res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + res;
         return res;
     }
