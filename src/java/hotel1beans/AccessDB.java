@@ -45,9 +45,9 @@ public class AccessDB {
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Main per fer proves.">
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         AccessDB adb = new AccessDB();
-    }*/
+    }
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Mètode de la classe per connectar-se a la bbdd.">
@@ -348,7 +348,7 @@ public class AccessDB {
             sql = ""
                 + "SELECT h.id_habitacio"
                 + "     FROM habitacio AS h"
-                + "     WHERE h.places_hab = " + num
+                + "     WHERE h.places_hab >= " + num
                 + "     GROUP BY h.id_habitacio"
                 + "     HAVING NOT EXISTS ("
                 + "        SELECT *"
@@ -357,6 +357,7 @@ public class AccessDB {
                 + "                 AND r.data_inici_res <= '" + dataIni + "'"
                 + "                 AND r.data_fi_res >= '" + dataFi + "')"
                 + "     LIMIT 1;";
+            System.out.println(sql);
             ResultSet rs = stat.executeQuery(sql);
             while(rs.next()) {
                 idHab = Integer.parseInt(rs.getString("id_habitacio"));

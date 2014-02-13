@@ -85,9 +85,8 @@ public class CrearReserva extends HttpServlet {
             request.getSession().setAttribute("preu", request.getParameter("preuFinal"));
             response.sendRedirect("reservaOk/reservaOk.jsp");
         } else {
-            response.setContentType("text/xml");
-            response.setHeader("Cache-Control", "no-cache");
-            response.getWriter().write("<reserva>S'ha produit un error</reserva>");
+            request.getSession().setAttribute("error", "S'ha produit un error creant la reserva");
+            response.sendRedirect("error/error.jsp");
         }
 
     }
