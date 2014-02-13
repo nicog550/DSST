@@ -5,37 +5,8 @@
  */
 package hotel1sax;
 
-import java.util.ArrayList;
-
-/**
- *
- * @author mascport
- */
 public class XMLMaker {
 
-    static final String usustag = "usuarios";
-    static final String usutag = "usuario";
-    static final String nomtag = "nombre";
-    static final String clatag = "clave";
-
-    public String listaUsuarios(ArrayList[] dep) {
-        String res = "";
-        res = res + "<" + usustag + ">" + "\n";
-        for (int i = 0; i < dep[0].size(); i++) {
-            res = res + "    <" + usutag + ">" + "\n";
-            res = res + "        <" + nomtag + ">" + "\n";
-            res = res + "            " + dep[0].get(i);
-            res = res + "        </" + nomtag + ">" + "\n";
-            res = res + "        <" + clatag + ">" + "\n";
-            res = res + "            " + dep[1].get(i);
-            res = res + "        </" + clatag + ">" + "\n";
-            res = res + "    </" + usutag + ">" + "\n";
-        }
-        res = res + "</" + usustag + ">" + "\n";
-        res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + res;
-        return res;
-    }
-    
     public String hiHaDisp(boolean disp) {
         String res = disp ? "true" : "false";
         res = "<disponibilitat>" + res + "</disponibilitat>\n";
@@ -43,10 +14,10 @@ public class XMLMaker {
         return res;
     }
 
-    public ArrayList[] listaUsuarios(String s) {
-        ArrayList [] res = new ArrayList[2];
-        res[0] = new ArrayList <String> ();
-        res[1] = new ArrayList <String> ();
+    public String crearReserva(boolean creada) {
+        String res = creada ? "true" : "false";
+        res = "<reserva>" + res + "</reserva>\n";
+        res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + res;
         return res;
     }
 }

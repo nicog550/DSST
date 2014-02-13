@@ -1,1 +1,4 @@
 -UTF8 per resultats de la bbdd
+-Pàgina d'error
+-Enviar emails
+-Scripts backoffice rotos

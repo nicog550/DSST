@@ -17,59 +17,76 @@ import org.xml.sax.helpers.DefaultHandler;
 public class MeuHandler extends DefaultHandler {
 
     private ArrayList[] mat = null;
-    private boolean biusus = false;
-    private boolean bfusus = false;
-    private boolean biusu = false;
-    private boolean bfusu = false;
-    private boolean binom = false;
-    private boolean bfnom = false;
-    private boolean biclau = false;
-    private boolean bfclau = false;
+    private StringBuilder dataIni, dataFi;
+    private final String resTag = "reserva";
+    private final String hostTag = "hoste";
+    private final String nomTag = "nom";
+    private final String mailTag = "mail";
+    private final String dniTag = "dni";
+    private final String nacTag = "nac";
+    private final String tipTag = "tip";
+    private boolean bIDataIni, bIDataFi, bINom,bIMail, bIDni, bINac, bITip;
 
-    public MeuHandler(ArrayList[] m) {
+    public MeuHandler(ArrayList[] m, StringBuilder di, StringBuilder df) {
         mat = m;
+        dataIni = di;
+        dataFi = df;
+        bIDataIni = bIDataFi = bINom = bIMail = bIDni = bINac = bITip = false;
     }
 
-    public MeuHandler() {
-    }
-
+    @Override
     public void startElement(String uri, String localName, String qName,
             Attributes attributes) throws SAXException {
-        if (qName.equalsIgnoreCase(XMLMaker.usustag)) {
-            biusus = true;
-        } else if (qName.equalsIgnoreCase(XMLMaker.usutag)) {
-            biusu = true;
-        } else if (qName.equalsIgnoreCase(XMLMaker.nomtag)) {
-            binom = true;
-        } else if (qName.equalsIgnoreCase(XMLMaker.clatag)) {
-            biclau = true;
+        switch (qName.toLowerCase()) {
+            case resTag: bIDataIni = true; break;
+            case hostTag: bIDataFi = true; break;
+            case nomTag: bINom = true; break;
+            case mailTag: bIMail = true; break;
+            case dniTag: bIDni = true; break;
+            case nacTag: bINac = true; break;
+            case tipTag: bITip = true; break;
+            default: break;
         }
     }
 
+    @Override
     public void endElement(String uri, String localName,
             String qName) throws SAXException {
-        if (qName.equalsIgnoreCase(XMLMaker.usustag)) {
-            biusus = false;
-        } else if (qName.equalsIgnoreCase(XMLMaker.usutag)) {
-            biusu = false;
-        } else if (qName.equalsIgnoreCase(XMLMaker.nomtag)) {
-            binom = false;
-        } else if (qName.equalsIgnoreCase(XMLMaker.clatag)) {
-            biclau = false;
+        switch (qName.toLowerCase()) {
+            case resTag: bIDataIni = false; break;
+            case hostTag: bIDataFi = false; break;
+            case nomTag: bINom = false; break;
+            case mailTag: bIMail = false; break;
+            case dniTag: bIDni = false; break;
+            case nacTag: bINac = false; break;
+            case tipTag: bITip = false; break;
+            default: break;
         }
     }
 
+    @Override
     public void characters(char ch[], int start, int length) throws SAXException {
-        if (binom) {
-            if (mat != null) {
-                mat[0].add(new String(ch, start, length));
-            }
-            binom = false;
-        } else if (biclau) {
-            if (mat != null) {
-                mat[1].add(new String(ch, start, length));
-            }
-            biclau = false;
+        if (bIDataIni) {
+            dataIni.append(new String(ch, start, length));
+            bIDataIni = false;
+        } else if (bIDataFi) {
+            dataFi.append(new String(ch, start, length));
+            bIDataFi = false;
+        } else if (bINom) {
+            if (mat != null) mat[0].add(new String(ch, start, length));
+            bINom = false;
+        } else if (bIMail) {
+            if (mat != null) mat[1].add(new String(ch, start, length));
+            bIMail = false;
+        } else if (bIDni) {
+            if (mat != null) mat[2].add(new String(ch, start, length));
+            bIDni = false;
+        } else if (bINac) {
+            if (mat != null) mat[3].add(new String(ch, start, length));
+            bINac = false;
+        } else if (bITip) {
+            if (mat != null) mat[4].add(new String(ch, start, length));
+            bITip = false;
         }
     }
 }

@@ -17,15 +17,12 @@ import org.xml.sax.InputSource;
 
 public class XMLLector {
 
-    public ArrayList[] listaUsuarios(String s) {
-        ArrayList[] res = new ArrayList[2];
-        res[0] = new ArrayList<String>();
-        res[1] = new ArrayList<String>();
+    public ArrayList[] llistaHostes(String s, StringBuilder dataIni, StringBuilder dataFi, ArrayList[] res) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             InputSource in = new InputSource(new StringReader(s));
-            MeuHandler handler = new MeuHandler(res);
+            MeuHandler handler = new MeuHandler(res, dataIni, dataFi);
             saxParser.parse(in, handler);
         } catch (Exception e) {
             e.printStackTrace();
