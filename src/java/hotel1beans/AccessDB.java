@@ -266,6 +266,7 @@ public class AccessDB {
             ret = true;
             stat.close();
         } catch (Exception ex) {
+            ret = false;
             ex.printStackTrace();
         } finally {
             disconnect();

@@ -20,6 +20,8 @@ public class MeuHandler extends DefaultHandler {
     private StringBuilder dataIni, dataFi;
     private final String resTag = "reserva";
     private final String hostTag = "hoste";
+    private final String dataIniTag = "dataini";
+    private final String dataFiTag = "datafi";
     private final String nomTag = "nom";
     private final String mailTag = "mail";
     private final String dniTag = "dni";
@@ -38,8 +40,8 @@ public class MeuHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName,
             Attributes attributes) throws SAXException {
         switch (qName.toLowerCase()) {
-            case resTag: bIDataIni = true; break;
-            case hostTag: bIDataFi = true; break;
+            case dataIniTag: bIDataIni = true; break;
+            case dataFiTag: bIDataFi = true; break;
             case nomTag: bINom = true; break;
             case mailTag: bIMail = true; break;
             case dniTag: bIDni = true; break;
@@ -53,8 +55,8 @@ public class MeuHandler extends DefaultHandler {
     public void endElement(String uri, String localName,
             String qName) throws SAXException {
         switch (qName.toLowerCase()) {
-            case resTag: bIDataIni = false; break;
-            case hostTag: bIDataFi = false; break;
+            case dataIniTag: bIDataIni = false; break;
+            case dataFiTag: bIDataFi = false; break;
             case nomTag: bINom = false; break;
             case mailTag: bIMail = false; break;
             case dniTag: bIDni = false; break;

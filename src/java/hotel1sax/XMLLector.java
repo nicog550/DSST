@@ -5,10 +5,6 @@
  */
 package hotel1sax;
 
-/**
- *
- * @author mascport
- */
 import java.io.StringReader;
 import java.util.ArrayList;
 import javax.xml.parsers.SAXParser;

@@ -1,4 +1,0 @@
--UTF8 per resultats de la bbdd
--Pàgina d'error. Enviar los errores a la página de error
--Enviar emails
--Scripts backoffice rotos. Comprobar la recuperación.

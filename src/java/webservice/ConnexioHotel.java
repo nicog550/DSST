@@ -46,8 +46,9 @@ public class ConnexioHotel {
         new XMLLector().llistaHostes(xml, dataIni, dataFi, res);
         
         String[] noms, emails, dnis, nacionalitats;
-        noms = emails = dnis = nacionalitats = new String[0];
-        int[] tipus = new int[res[0].size()];
+        noms = emails = dnis = nacionalitats = null;
+        noms = new String[res[0].size()]; emails = new String[res[0].size()]; dnis = new String[res[0].size()];
+        nacionalitats = new String[res[0].size()]; int[] tipus = new int[res[0].size()];
         convertirValors(res, noms, emails, dnis, nacionalitats, tipus);
         //Cream la reserva
         boolean ret = new AccessDB().crearReserva(noms, emails, dnis, nacionalitats, tipus, dataIni.toString(), dataFi.toString());
@@ -65,13 +66,20 @@ public class ConnexioHotel {
      */
     private void convertirValors(ArrayList[] res, String[] noms, String[] emails, String[] dnis, String[] nacionalitats,
                                  int[] tipus) {
-        //noms = new String[res[0].size()]; emails = new String[res[0].size()]; dnis = new String[res[0].size()];
-        //nacionalitats = new String[res[0].size()];
-        noms = (String[])res[0].toArray(new String[0]);
-        emails = (String[])res[0].toArray(new String[0]);
-        dnis = (String[])res[0].toArray(new String[0]);
-        nacionalitats = (String[])res[0].toArray(new String[0]);
-        for (int i = 0; i < tipus.length ; i++) {
+        for (int i = 0; i < res[0].size(); i++) {
+            noms[i] = (String)res[0].get(i);
+        }
+        for (int i = 0; i < res[1].size(); i++) {
+            emails[i] = (String)res[1].get(i);
+        }
+        for (int i = 0; i < res[2].size(); i++) {
+            dnis[i] = (String)res[2].get(i);
+        }
+        for (int i = 0; i < res[3].size(); i++) {
+            nacionalitats[i] = (String)res[3].get(i);
+        }
+        
+        for (int i = 0; i < res[4].size(); i++) {
             tipus[i] = Integer.parseInt((String)res[4].get(i));
         }
     }
